@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prudence Self-Assessment</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f6f9;
+margin:0;
+padding:20px;
+}
+
+.container{
+max-width:700px;
+margin:auto;
+}
+
+h1{
+text-align:center;
+}
+
+.card{
+background:white;
+padding:18px;
+margin-bottom:15px;
+border-radius:10px;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+
+.question{
+font-size:14px;
+color:#555;
+margin-top:5px;
+}
+
+select{
+margin-top:10px;
+padding:6px;
+font-size:16px;
+}
+
+.result{
+background:#e9f5ff;
+padding:20px;
+border-radius:10px;
+margin-top:20px;
+}
+
+.progress{
+height:20px;
+background:#ddd;
+border-radius:20px;
+overflow:hidden;
+margin-top:10px;
+}
+
+.bar{
+height:100%;
+width:0%;
+background:#4caf50;
+}
+
+input{
+width:100%;
+padding:10px;
+margin-top:5px;
+margin-bottom:15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Prudence Scorecard</h1>
+<p>Rate yourself from <b>1 (Very Weak)</b> to <b>8 (Very Strong)</b></p>
+
+<div id="questions"></div>
+
+<div class="result">
+
+<h3>Total Score: <span id="total">0</span> / 64</h3>
+
+<div class="progress">
+<div class="bar" id="bar"></div>
+</div>
+
+<h3 id="category"></h3>
+
+</div>
+
+<div class="card">
+
+<h3>Reflection</h3>
+
+Top 2 strengths
+<input type="text">
+
+Top 2 areas to improve
+<input type="text">
+
+One action step this week
+<input type="text">
+
+</div>
+
+</div>
+
+<script>
+
+const traits = [
+
+["Be Self-Controlled","Do I control my reactions when offended or embarrassed?"],
+
+["Be Selective in Speech","Do I think before speaking and avoid harmful words?"],
+
+["Be Thoughtful in Action","Do I act intentionally instead of impulsively?"],
+
+["Be Discerning","Do I evaluate information carefully before deciding?"],
+
+["Be Teachable","Am I open to correction and learning from others?"],
+
+["Be Kind in Speech","Do my words show kindness and clarity?"],
+
+["Be Eager to Learn","Am I actively seeking knowledge and wisdom?"],
+
+["Be Forward-Looking","Do I anticipate outcomes and prepare wisely?"]
+
+];
+
+const container=document.getElementById("questions");
+
+traits.forEach((t,i)=>{
+
+container.innerHTML+=`
+
+<div class="card">
+
+<b>${i+1}. ${t[0]}</b>
+
+<div class="question">${t[1]}</div>
+
+<select onchange="score()">
+
+<option value="0">Select</option>
+
+${[1,2,3,4,5,6,7,8].map(n=><option>${n}</option>)}
+
+</select>
+
+</div>
+
+`;
+
+});
+
+function score(){
+
+let selects=document.querySelectorAll("select");
+
+let total=0;
+
+selects.forEach(s=>{
+
+total+=Number(s.value);
+
+});
+
+document.getElementById("total").innerText=total;
+
+let category="";
+
+if(total>=56)
+category="Strong in prudence – consistently practicing wisdom";
+
+else if(total>=40)
+category="Growing in prudence – good foundation, room to mature";
+
+else if(total>=25)
+category="Needs intentional development";
+
+else
+category="Requires focused attention and growth";
+
+document.getElementById("category").innerText=category;
+
+let percent=(total/64)*100;
+
+document.getElementById("bar").style.width=percent+"%";
+
+}
+
+</script>
+
+</body>
+</html>

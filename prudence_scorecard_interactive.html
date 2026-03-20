@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Prudence Scorecard</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background:#f5f7fb; }
+    h1 { text-align: center; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+    th { background: #e9eefc; }
+    input[type="number"] { width: 60px; padding: 5px; }
+    .result { margin-top: 20px; font-size: 18px; font-weight: bold; }
+    button { padding: 10px 20px; margin-top: 15px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<h1>Prudence Self-Assessment Scorecard</h1>
+<p>Rate yourself from <strong>1 (Very Weak)</strong> to <strong>8 (Very Strong)</strong></p>
+
+<table>
+  <tr>
+    <th>#</th>
+    <th>Characteristic</th>
+    <th>Score (1-8)</th>
+  </tr>
+
+  <tr><td>1</td><td>Be Self-Controlled</td><td><input type="number" min="1" max="8" id="c1"></td></tr>
+  <tr><td>2</td><td>Be Selective in Speech</td><td><input type="number" min="1" max="8" id="c2"></td></tr>
+  <tr><td>3</td><td>Be Thoughtful in Action</td><td><input type="number" min="1" max="8" id="c3"></td></tr>
+  <tr><td>4</td><td>Be Discerning</td><td><input type="number" min="1" max="8" id="c4"></td></tr>
+  <tr><td>5</td><td>Be Teachable</td><td><input type="number" min="1" max="8" id="c5"></td></tr>
+  <tr><td>6</td><td>Be Kind in Speech</td><td><input type="number" min="1" max="8" id="c6"></td></tr>
+  <tr><td>7</td><td>Be Eager to Learn</td><td><input type="number" min="1" max="8" id="c7"></td></tr>
+  <tr><td>8</td><td>Be Forward-Looking</td><td><input type="number" min="1" max="8" id="c8"></td></tr>
+
+</table>
+
+<button onclick="calculateScore()">Calculate Score</button>
+
+<div class="result" id="result"></div>
+
+<script>
+function calculateScore() {
+  let total = 0;
+  let count = 0;
+
+  for (let i = 1; i <= 8; i++) {
+    let val = document.getElementById('c' + i).value;
+    if (val) {
+      total += parseInt(val);
+      count++;
+    }
+  }
+
+  if (count < 8) {
+    document.getElementById('result').innerHTML = "Please rate all 8 characteristics.";
+    return;
+  }
+
+  let message = "";
+
+  if (total >= 56) {
+    message = "Strong in prudence (Consistently practicing wisdom)";
+  } else if (total >= 40) {
+    message = "Growing in prudence (Good foundation, room to mature)";
+  } else if (total >= 25) {
+    message = "Needs intentional development";
+  } else {
+    message = "Requires focused attention and growth";
+  }
+
+  document.getElementById('result').innerHTML = `Total Score: ${total}/64 <br> ${message}`;
+}
+</script>
+
+</body>
+</html>
